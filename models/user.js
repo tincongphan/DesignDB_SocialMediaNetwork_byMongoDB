@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
     },
     //  tech referencing
     groupId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "Group"
     }
 })
