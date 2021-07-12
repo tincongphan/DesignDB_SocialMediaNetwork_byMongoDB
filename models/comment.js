@@ -8,7 +8,12 @@ const commentSchema = mongoose.Schema({
     postId: {
         type : mongoose.Schema.Types.ObjectId,
         ref: "Post"
-    }
+    },
+    content: {
+        type: String,
+        require : true
+    }, 
+    createDate : {type : Date, default: new Date().getTime()}
 
 })
 
