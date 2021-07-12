@@ -25,7 +25,7 @@ function createGroup(name, description) {
         .catch(console.log)
 }
 
-createGroup("student discuss", "talk about mongoose")
+// createGroup("student discuss", "talk about mongoose")
 
 // update group --> add userId to group, add groupId to user
 
@@ -66,4 +66,44 @@ function updateGroup(userId, groupId) {
         .catch(console.log)
 }
 
-updateGroup("60eaedc49d16832f8cbc127f", "60ec077bf1c1b9159068667b")
+// updateGroup("60eaedc49d16832f8cbc127f", "60ec077bf1c1b9159068667b")
+
+
+// query group 
+// has groupId, find all user in group
+function findUsersByGroup(groupId) {
+    Group
+        .findById(groupId)
+        .then((group) => {
+            if (!group) {
+                return console.log("group doesn't exist")
+            } else {
+                return User
+                    .find({ _id: { $in: group.userIds } }) // userIds is array, so use $in
+                    .select("username -_id")
+            }
+        })
+        .then(console.log)
+        .catch(console.log)
+}
+
+findUsersByGroup("60ec077bf1c1b9159068667b")
+// has userId, find all group user belong to
+
+function findGroupByUser(userId) {
+    User
+        .findById(userId)
+        .then((user) => {
+            if (!user) {
+                return console.log("user doesn't exist")
+            } else {
+                return Group
+                    .find({ _id: { $in: user.groupId } })
+                    .select("name -_id")
+            }
+        })
+        .then(console.log)
+        .catch(console.log)
+}
+
+findGroupByUser("60eafb13d954352498ebad6a")
